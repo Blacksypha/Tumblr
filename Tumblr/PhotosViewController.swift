@@ -72,13 +72,17 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         task.resume()
     }
     
+    
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
     
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
-        
         let post = posts[indexPath.row]
         
         // 1.            // 2.          // 3.
@@ -96,15 +100,28 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
             
             cell.thumbImageView.af_setImage(withURL: url!)
         }
-        
-        
-        
         return cell
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! PhotoDetailsViewController
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)!
+        let post = posts[indexPath.row]
+            
+        vc.post = post
+        }
+        
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 
@@ -119,4 +136,4 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
     }
     */
 
-}
+
